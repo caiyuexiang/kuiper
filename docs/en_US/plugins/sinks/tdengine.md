@@ -17,7 +17,7 @@ require (
 
 ```shell
 go mod edit -replace github.com/emqx/kuiper=/$kuiper
-go build --buildmode=plugin -o /$kuiper/plugins/sinks/Tdengine@v1.0.0.so /$kuiper/plugins/sinks/tdengine.go
+go build --buildmode=plugin -o /$kuiper/plugins/sinks/Tdengine@v1.0.0.so /$kuiper/plugins/sinks/tdengine/tdengine.go
 ```
 ### Install plugin
 Since the operation of the tdengine plug-in depends on the tdengine client, for the convenience of users, the tdengine client will be downloaded when the plug-in is installed. However, the tdengine client version corresponds to the server version one-to-one, which is not compatible with each other, so the user must inform the tdengine server version used.
@@ -47,19 +47,19 @@ https://www.taosdata.com/cn/getting-started/
 
 ### Create a stream
 
-```curl
+```bash
 curl --location --request POST 'http://127.0.0.1:9081/streams' --header 'Content-Type:application/json' --data '{"sql":"create stream demoStream(time string, age BIGINT) WITH ( DATASOURCE = \"device/+/message\", FORMAT = \"json\");"}'
 ```
 
 ### Create a rule
 
-```curl
+```bash
 curl --location --request POST 'http://127.0.0.1:9081/rules' --header 'Content-Type:application/json' --data '{"id":"demoRule","sql":"SELECT * FROM demoStream;","actions":[{"tdengine":{"provideTs":true,"tsFieldName":"time","port":0,"ip":"127.0.0.1","user":"root","password":"taosdata","database":"dbName","table":"tableName","fields":["time","age"]}}]}'
 ```
 
 ### Send data
 
-```curl
+```bash
 mosquitto_pub -h broker.emqx.io -m '{"time":"2020-01-11 18:18:18", "age" : 18}' -t device/device_001/message
 ```
 

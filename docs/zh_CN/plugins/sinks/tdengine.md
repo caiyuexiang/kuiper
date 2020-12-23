@@ -17,7 +17,7 @@ require (
 
 ```shell
 go mod edit -replace github.com/emqx/kuiper=/$kuiper
-go build --buildmode=plugin -o /$kuiper/plugins/sinks/Tdengine@v1.0.0.so /$kuiper/plugins/sinks/tdengine.go
+go build --buildmode=plugin -o /$kuiper/plugins/sinks/Tdengine@v1.0.0.so /$kuiper/plugins/sinks/tdengine/tdengine.go
 ```
 ### 安装插件
 由于 tdengine 插件的运行依赖于 tdengine 客户端，为了便于用户使用，安装插件时将下载 tdengine 客户端。但是 tdengine 客户端版本与其服务器版本一一对应，互不兼容，所以用户必须告知所用 tdengine 服务器版本。
@@ -47,19 +47,19 @@ https://www.taosdata.com/cn/getting-started/
 
 ### 创建流
 
-```curl
+```bash
 curl --location --request POST 'http://127.0.0.1:9081/streams' --header 'Content-Type:application/json' --data '{"sql":"create stream demoStream(time string, age BIGINT) WITH ( DATASOURCE = \"device/+/message\", FORMAT = \"json\");"}'
 ```
 
 ### 创建规则
 
-```curl
+```bash
 curl --location --request POST 'http://127.0.0.1:9081/rules' --header 'Content-Type:application/json' --data '{"id":"demoRule","sql":"SELECT * FROM demoStream;","actions":[{"tdengine":{"provideTs":true,"tsFieldName":"time","port":0,"ip":"127.0.0.1","user":"root","password":"taosdata","database":"dbName","table":"tableName","fields":["time","age"]}}]}'
 ```
 
 ### 发送数据
 
-```curl
+```bash
 mosquitto_pub -h broker.emqx.io -m '{"time":"2020-01-11 18:18:18", "age" : 18}' -t device/device_001/message
 ```
 

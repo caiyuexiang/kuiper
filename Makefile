@@ -89,7 +89,7 @@ real_pkg:
 
 .PHONY:cross_prepare
 cross_prepare:
-	@docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+	@docker run --rm --privileged tonistiigi/binfmt --install all
 
 .PHONY: cross_build
 cross_build: cross_prepare
@@ -172,6 +172,7 @@ cross_docker: cross_prepare
 PLUGINS := sinks/file \
 	sinks/influx \
 	sinks/zmq \
+	sinks/image \
 	sources/random \
 	sources/zmq \
 	functions/accumulateWordCount \
