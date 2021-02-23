@@ -1,4 +1,4 @@
-# 规则
+## 规则
 
 规则由 JSON 定义，下面是一个示例。
 
@@ -22,7 +22,7 @@
 
 创建规则需要以下3个参数。
 
-## 参数
+### 参数
 
 | 参数名 | 是否可选 | 说明                |
 | ------------- | -------- | ------------------------------------------------------------ |
@@ -31,15 +31,15 @@
 | actions           | 否   | Sink 动作数组 |
 | options           | 是       | 选项图     |
 
-## id
+### id
 
 规则的标识。 规则名称不能在同一 Kuiper 实例中重复。
 
-## sql
+### sql
 
 为规则运行的 sql 查询。
 
-### 选项
+#### 选项
 
 当前的选项包括：
 
@@ -53,20 +53,20 @@
 | qos                | int:0        | 指定流的 qos。 值为0对应最多一次； 1对应至少一次，2对应恰好一次。 如果 qos 大于0，将激活检查点机制以定期保存状态，以便可以从错误中恢复规则。 |
 | checkpointInterval | int:300000   | 指定触发检查点的时间间隔（单位为 ms）。 仅当 qos 大于0时才有效。 |
 
-有关 `qos` 和 `checkpointInterval` 的详细信息，请查看[状态和容错](state_and_fault_tolerance)。
+有关 `qos` 和 `checkpointInterval` 的详细信息，请查看[状态和容错](state_and_fault_tolerance.md)。
 
 可以在 `rules` 下属的 `etc/kuiper.yaml` 中全局定义规则选项。 规则 json 中定义的选项将覆盖全局设置。
 
-## 源
+### 源
 
 - Kuiper 支持以下 3 种内置源：
-  - MQTT 源，有关更多详细信息，请参阅 [MQTT source stream](https://github.com/emqx/kuiper/blob/dev/0.9.1/docs/zh_CN/rules/sources/mqtt.md)。
-  - EdgeX 源缺省是包含在[容器镜像](https://hub.docker.com/r/emqx/kuiper)中发布的，但是没有包含在单独下载的二进制包中，您可以使用 `make pkg_with_edgex` 命令来编译出一个支持 EdgeX 源的程序。更多关于它的详细信息，请参考 [EdgeX source stream](https://github.com/emqx/kuiper/blob/dev/0.9.1/docs/zh_CN/rules/sources/edgex.md)。
-  - HTTP 定时拉取源，按照用户指定的时间间隔，定时从 HTTP 服务器中拉取数据，更多详细信息，请参考[这里](https://github.com/emqx/kuiper/blob/dev/0.9.1/docs/zh_CN/rules/sources/http_pull.md) 。
-- 有关Kuiper SQL 的更多信息，请参阅 [SQL](https://github.com/emqx/kuiper/blob/dev/0.9.1/docs/zh_CN/sqls/overview.md)。
-- 可以自定义来源，请参阅 [extension](https://github.com/emqx/kuiper/blob/dev/0.9.1/docs/zh_CN/extension/overview.md)了解更多详细信息。
+  - MQTT 源，有关更多详细信息，请参阅 [MQTT source stream](https://github.com/emqx/kuiper/blob/master/docs/zh_CN/rules/sources/mqtt.md)。
+  - EdgeX 源缺省是包含在[容器镜像](https://hub.docker.com/r/emqx/kuiper)中发布的，但是没有包含在单独下载的二进制包中，您可以使用 `make pkg_with_edgex` 命令来编译出一个支持 EdgeX 源的程序。更多关于它的详细信息，请参考 [EdgeX source stream](https://github.com/emqx/kuiper/blob/master/docs/zh_CN/rules/sources/edgex.md)。
+  - HTTP 定时拉取源，按照用户指定的时间间隔，定时从 HTTP 服务器中拉取数据，更多详细信息，请参考[这里](https://github.com/emqx/kuiper/blob/master/docs/zh_CN/rules/sources/http_pull.md) 。
+- 有关Kuiper SQL 的更多信息，请参阅 [SQL](https://github.com/emqx/kuiper/blob/master/docs/zh_CN/sqls/overview.md)。
+- 可以自定义来源，请参阅 [extension](https://github.com/emqx/kuiper/blob/master/docs/zh_CN/extension/overview.md)了解更多详细信息。
 
-### 目标/动作
+#### 目标/动作
 
 当前，支持以下目标/动作：
 
@@ -91,7 +91,7 @@
 | sendSingle        | true     | 输出消息以数组形式接收，该属性意味着是否将结果一一发送。 如果为false，则输出消息将为`{"result":"${the string of received message}"}`。 例如，`{"result":"[{\"count\":30},"\"count\":20}]"}`。否则，结果消息将与实际字段名称一一对应发送。 对于与上述相同的示例，它将发送 `{"count":30}`，然后发送`{"count":20} `到 RESTful 端点。默认为 false。 |
 | dataTemplate      | true     | [golang 模板](https://golang.org/pkg/html/template)格式字符串，用于指定输出数据格式。 模板的输入是目标消息，该消息始终是映射数组。 如果未指定数据模板，则将数据作为原始输入。 |
 
-#### 数据模板
+##### 数据模板
 用户可以参考 [Kuiper 中使用 Golang 模版 (template) 定制分析结果](data_template.md) 来获取更多的关于数据模版的使用场景。
 
 如果 sendSingle 为 true，则数据模板将针对某一条记录执行操作； 否则，它将对整个记录数组执行操作。 典型的数据模板是：
@@ -152,7 +152,7 @@
 
 可以自定义动作以支持不同种类的输出，有关更多详细信息，请参见 [extension](../extension/overview.md) 。
 
-#### 模版中支持的函数
+##### 模版中支持的函数
 
 Kuiper 扩展了几个可以在模版中使用的函数。
 

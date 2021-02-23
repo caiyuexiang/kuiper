@@ -49,8 +49,8 @@ It can be run at various IoT edge use scenarios, such as real-time processing of
 
 ## Quick start
 
-- [Kuiper 5 minutes quick start](docs/en_US/quick_start_docker.md)
-- [EdgeX rule engine tutorial](docs/en_US/edgex/edgex_rule_engine_tutorial.md)
+- [Kuiper 5 minutes quick start](./quick_start_docker.md)
+- [EdgeX rule engine tutorial](./edgex/edgex_rule_engine_tutorial.md)
 
 ## Slack channels
 Join our [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1pARtaZKvv6IfTvw), and then join [kuiper](https://emqx.slack.com/archives/C0138SZP23Y) channel.
@@ -61,7 +61,7 @@ Join our [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1
 
 - Using JMeter MQTT plugin to send simulation data to EMQ X Broker, such as: ``{"temperature": 10, "humidity" : 90}``, the value of temperature and humidity are random integer between 0 - 100.
 - Kuiper subscribe from EMQ X Broker, and analyze data with SQL: ``SELECT * FROM demo WHERE temperature > 50 `` 
-- The analysis result are wrote to local file by using [file sink plugin](docs/en_US/plugins/sinks/file.md).
+- The analysis result are wrote to local file by using [file sink plugin](./plugins/sinks/file.md).
 
 | Devices                                        | Message # per second | CPU usage     | Memory usage |
 | ---------------------------------------------- | -------------------- | ------------- | ------------ |
@@ -85,7 +85,7 @@ Join our [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1
 
 - Kuiper subscribe from EdgeX ZeroMQ message bus, and analyze data with SQL: ``SELECT * FROM demo WHERE temperature > 50``. 90% of data will be filtered by the rule.
 
-- The analysis result are sent to [nop sink](docs/en_US/rules/sinks/nop.md), all of the result data will be ignored.
+- The analysis result are sent to [nop sink](./rules/sinks/nop.md), all of the result data will be ignored.
 
 |                                                | Message # per second | CPU usage     | Memory usage |
 | ---------------------------------------------- | -------------------- | ------------- | ------------ |
@@ -108,23 +108,23 @@ Join our [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1
 
 ## Documents
 
-- [Getting started](docs/en_US/getting_started.md) 
+- [Getting started](./getting_started.md) 
 
-- [Reference guide](docs/en_US/reference.md)
-  - [Install and operation](docs/en_US/operation/overview.md)
-  - [Command line interface tools - CLI](docs/en_US/cli/overview.md)
-  - [Kuiper SQL reference](docs/en_US/sqls/overview.md)
-  - [Rules](docs/en_US/rules/overview.md)
-  - [Extend Kuiper](docs/en_US/extension/overview.md)
-  - [Plugins](docs/en_US/plugins/overview.md)
+- Reference guide
+  - [Install and operation](./getting_started.md)
+  - [Command line interface tools - CLI](./cli/overview.md)
+  - [Kuiper SQL reference](./sqls/overview.md)
+  - [Rules](./rules/overview.md)
+  - [Extend Kuiper](./extension/overview.md)
+  - [Plugins](./plugins/overview.md)
 
 ## Build from source
 
-#### Preparation
+### Preparation
 
 - Go version >= 1.13
 
-#### Compile
+### Compile
 
 + Binary: 
 
@@ -142,8 +142,18 @@ Join our [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1
 
   > Docker images support EdgeX by default
 
-To using cross-compilation, refer to [this doc](docs/en_US/cross-compile.md).
+## Cross-compile binaries
+
+:::tip Tip
+Kuiper plugins bases on Golang, and due to Golang restrictions, ``CGO_ENABLED``  flag must be set to 0 to use the Golang cross-compile. But with this flag mode, the Golang plugins will not work. So if you want to use plugins in Kuiper, you can NOT use cross-compile to produce the binary packages.
+:::
+
+- Preparation
+  - docker version >= 19.03
+  - Enable Docker CLI  experimental mode
+- Cross-compile binary files: ``$ make cross_build``
+- Cross-compile images for all platforms and push to registry:``$ make cross_docker``
 
 ## Open source license
 
-[Apache 2.0](LICENSE)
+[Apache 2.0](https://github.com/emqx/kuiper/blob/master/LICENSE)

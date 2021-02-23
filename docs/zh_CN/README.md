@@ -49,8 +49,8 @@ Kuiper 可以运行在各类物联网的边缘使用场景中，比如工业物�
 
 ## 快速入门
 
-- [Kuiper 5分钟快速入门](docs/zh_CN/quick_start_docker.md)
-- [EdgeX 规则引擎教程](docs/zh_CN/edgex/edgex_rule_engine_tutorial.md)
+- [Kuiper 5分钟快速入门](./quick_start_docker.md)
+- [EdgeX 规则引擎教程](./edgex/edgex_rule_engine_tutorial.md)
 
 ## Slack
 加入我们的 [Slack](https://join.slack.com/t/emqx/shared_invite/zt-7xrracuf-GGdbNB1pARtaZKvv6IfTvw)，然后加入 [kuiper](https://emqx.slack.com/archives/C0138SZP23Y) 频道。
@@ -61,7 +61,7 @@ Kuiper 可以运行在各类物联网的边缘使用场景中，比如工业物�
 
 - 使用 JMeter MQTT 插件来发送数据到 EMQ X 服务器，消息类似于 ``{"temperature": 10, "humidity" : 90}``， 温度与湿度的值是介于 0 ～ 100 之间的随机整数值
 - Kuiper 从 EMQ X 服务器订阅消息，并且通过 SQL 分析数据： ``SELECT * FROM demo WHERE temperature > 50 `` 
-- 分析结果通过 [文件插件](docs/zh_CN/plugins/sinks/file.md) 写到本地的文件系统里
+- 分析结果通过 [文件插件](./plugins/sinks/file.md) 写到本地的文件系统里
 
 | 设备                                                 | 每秒发送消息数 | CPU 使用        | 内存 |
 | ---------------------------------------------------- | -------------- | --------------- | ---- |
@@ -85,7 +85,7 @@ Kuiper 可以运行在各类物联网的边缘使用场景中，比如工业物�
 
 - Kuiper 从 EdgeX ZeroMQ 消息总线订阅数据，并且使用 ``SELECT * FROM demo WHERE temperature > 50 `` 来分析数据，其中 90% 数据被规则所过滤。
 
-- 分析结果将被发送到 [nop sink](docs/zh_CN/rules/sinks/nop.md)，所有的数据都被忽略。
+- 分析结果将被发送到 [nop sink](./rules/sinks/nop.md)，所有的数据都被忽略。
 
 |                                                | 每秒发送消息数 | CPU 使用      | 内存 |
 | ---------------------------------------------- | -------------- | ------------- | ---- |
@@ -108,23 +108,23 @@ Kuiper 可以运行在各类物联网的边缘使用场景中，比如工业物�
 
 ## 文档
 
-- [开始使用](docs/zh_CN/getting_started.md) 
+- [开始使用](./getting_started.md) 
 
-- [参考指南](docs/zh_CN/reference.md)
-  - [安装与操作](docs/zh_CN/operation/overview.md)
-  - [命令行界面工具-CLI](docs/zh_CN/cli/overview.md)
-  - [Kuiper SQL参考](docs/zh_CN/sqls/overview.md)
-  - [规则](docs/zh_CN/rules/overview.md)
-  - [扩展Kuiper](docs/zh_CN/extension/overview.md)
-  - [插件](docs/zh_CN/plugins/overview.md)
+- 参考指南
+  - [安装与操作](./getting_started.md)
+  - [命令行界面工具-CLI](./cli/overview.md)
+  - [Kuiper SQL参考](./sqls/overview.md)
+  - [规则](./rules/overview.md)
+  - [扩展Kuiper](./extension/overview.md)
+  - [插件](./plugins/overview.md)
 
 ## 从源码编译
 
-#### 准备
+### 准备
 
 + Go version >= 1.13
 
-#### 编译
+### 编译
 
 + 编译二进制：
 
@@ -143,8 +143,18 @@ Kuiper 可以运行在各类物联网的边缘使用场景中，比如工业物�
   > Docker 镜像默认支持 EdgeX
 
 
-如果您要实现交叉编译，请参考[此文档](docs/zh_CN/cross-compile.md)。
+## 交叉编译二进制文件
+
+:::tip Tip
+Kuiper 插件基于 Golang 的方式实现，由于 Golang 本身的限制，使用了交叉编译的方式必须将编译参数 ``CGO_ENABLED`` 设置为0，而在该模式下，<u>插件将不可工作</u>。所以如果使用了 Kuiper 的插件的话，<u>不能以交叉编译的方式来生成二进制包。</u>
+:::
+
+- 准备
+  - docker version >= 19.03
+  - 启用 Docker CLI 的 experimental 模式（experimental mode）
+- 交叉编译二进制文件：``$ make cross_build``
+- 交叉编译跨平台镜像，并推到库中：``$ make cross_docker``
 
 ## 开源版权
 
-[Apache 2.0](LICENSE)
+[Apache 2.0](https://github.com/emqx/kuiper/blob/master/LICENSE)

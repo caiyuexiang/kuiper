@@ -31,17 +31,17 @@ This part of the content defines which library dependencies are used by the plug
 
   This part contains the author information of the plugin. The plugin developer can provide this information as appropriate. The information of this part will be displayed in the plugin information list of the management console.
 
-      * name
-      * email
-      * company
-      * website
+  * name
+  * email
+  * company
+  * website
 
 * helpUrl
 
   The help file address of the plug-in. The console will link to the corresponding help file according to the language support.
 
-      * en_US: English document help address
-      * zh_CN: Chinese document help address
+  * en_US: English document help address
+  * zh_CN: Chinese document help address
 
 * description
 
@@ -275,6 +275,14 @@ The following is a sample of metadata file.
 ```
 
 ## Functions
+
+| Name                                          | Description                                                  | Remarks                                                 |
+| --------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
+| [echo](functions/functions.md)                | Output parameter value as it is                              | Plugin sample, not available for production environment |
+| [countPlusOne](functions/functions.md)        | Output the value of the parameter length plus one            | Plugin sample, not available for production environment |
+| [accumulateWordCount](functions/functions.md) | The function counts how many words there are                 | Plugin sample, not available for production environment |
+| [resize](functions/functions.md)              | Create a scaled image with new dimensions (width, height). If width or height is set to 0, it is set to the reserved value of aspect ratio | Plugin sample, not available for production environment |
+| [thumbnail](functions/functions.md)           | Reduce the image that retains the aspect ratio to the maximum size (maxWidth, maxHeight). | Plugin sample, not available for production environment |
 
 Kuiper has many built-in functions that can perform calculations on data. (Refer to https://github.com/emqx/kuiper/blob/master/docs/zh_CN/sqls/built-in_functions.md for specific documentation)
 

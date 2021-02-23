@@ -31,17 +31,17 @@ source 的大部分属性用户通过对应的配置文件指定，用户无法�
 
   这部分包含了插件的作者信息，插件开发者可以视情况提供这些信息，这部分信息会被展示在管理控制台的插件信息列表上。
 
-      * name：名字
-      * email：电子邮件地址
-      * company：公司名称
-      * website：公司网站地址
+  * name：名字
+  * email：电子邮件地址
+  * company：公司名称
+  * website：公司网站地址
 
 * helpUrl
 
   该插件的帮助文件地址，控制台会根据语言的支持情况，链接到对应的帮助文档中。
 
-      * en_US：英文文档帮助地址
-      * zh_CN：中文文档帮助地址
+  * en_US：英文文档帮助地址
+  * zh_CN：中文文档帮助地址
 
 * description
 
@@ -274,6 +274,14 @@ source 的大部分属性用户通过对应的配置文件指定，用户无法�
 ```
 
 ## 函数 (Functions)
+
+| 名称                                          | 描述                                                         | 备注                       |
+| --------------------------------------------- | ------------------------------------------------------------ | -------------------------- |
+| [echo](functions/functions.md)                | 原样输出参数值                                               | 插件样例，不可用于生产环境 |
+| [countPlusOne](functions/functions.md)        | 输出参数长度加一的值                                         | 插件样例，不可用于生产环境 |
+| [accumulateWordCount](functions/functions.md) | 函数统计一共有多少个单词                                     | 插件样例，不可用于生产环境 |
+| [resize](functions/functions.md)              | 创建具有新尺寸（宽度，高度）的缩放图像。如果 width 或 height 设置为0，则将其设置为长宽比保留值 | 插件样例，不可用于生产环境 |
+| [thumbnail](functions/functions.md)           | 将保留宽高比的图像缩小到最大尺寸( maxWidth，maxHeight)。     | 插件样例，不可用于生产环境 |
 
 Kuiper 具有许多内置函数，可以对数据执行计算。(具体文档参考 https://github.com/emqx/kuiper/blob/master/docs/zh_CN/sqls/built-in_functions.md)
 
